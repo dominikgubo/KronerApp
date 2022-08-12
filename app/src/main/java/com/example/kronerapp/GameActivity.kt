@@ -3,9 +3,9 @@ package com.example.kronerapp
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 
-class RulesSelectActivity : AppCompatActivity() {
+class GameActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_rules_select)
+        setContentView(R.layout.activity_game)
     }
 }
