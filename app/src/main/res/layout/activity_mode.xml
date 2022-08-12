@@ -5,14 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/alchos"
-    tools:context=".MainActivity">
+    android:background="@drawable/pattern"
+    tools:context=".ModeActivity">
 
     <TextView
+        android:id="@+id/gameTitle"
         android:layout_marginTop="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Kroner"
+        android:text="VRSTA IGRE"
         android:textSize="70dp"
         android:textColor="@color/white"
         android:shadowColor="#000000"
@@ -26,51 +27,23 @@
         app:layout_constraintVertical_bias="0.043"
         android:layout_gravity="center"/>
 
-    <TextView
-        android:id="@+id/welcome"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Fun and interactive game"
-        android:textColor="@color/white"
-        android:layout_margin="5dp"
-        android:layout_gravity="center" />
-
-
-
     <Button
-        android:id="@+id/to_newGame"
+        android:id="@+id/autobusStart"
         android:layout_width="181dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="100dp"
         android:backgroundTint="@color/teal_200"
-        android:text="Nova igra" />
-
-    <Button
-        android:id="@+id/to_rules"
-        android:layout_width="181dp"
-        android:layout_height="wrap_content"
+        android:text="Autobus" />
+    
+    <androidx.fragment.app.FragmentContainerView
+        android:layout_width="350dp"
+        android:layout_height="450dp"
         android:layout_gravity="center"
-        android:layout_marginTop="40dp"
-        android:backgroundTint="@color/teal_200"
-        android:text="Pravila" />
+        android:id="@+id/fragmentContainer" />
 
-    <Button
-        android:id="@+id/to_localStatistics"
-        android:layout_width="181dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="40dp"
-        android:backgroundTint="@color/teal_200"
-        android:text="Lokalna statistika" />
 
-    <Button
-        android:id="@+id/to_globalStatistics"
-        android:layout_width="181dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="40dp"
-        android:backgroundTint="@color/teal_200"
-        android:text="Globalna statistika" />
+
+
 
 </LinearLayout>

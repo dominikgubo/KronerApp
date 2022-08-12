@@ -9,6 +9,6 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:text="Dva igrača igraju 1 na 1 po krugovima, jedan dijeli karte dok drugi ima zadaću pogoditi jel karta viša ili niža. Dijele se 4 karte te ako je igrač koji se vozi u autobusu pogodio sve karte izlazi van iz kruga tj. autobusa i mijenjaju se uloge. U suprotnom, krivom procjenom, igrač mora popiti broj gutljaja pića jednak broju karte na kojoj je stao. Ako su sve karte potrošene, a igrač nije izašao iz autobusa onda mora popiti svoje piće na eks. Karta prema jačini može biti višlja, niža ili jednaka. Igra se sve dok jedan igrač ne odustane.   " />
 
 </FrameLayout>
