@@ -6,14 +6,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/pattern"
-    tools:context=".ModeActivity">
+    tools:context=".RulesActivity">
 
     <TextView
-        android:id="@+id/gameTitle"
+        android:id="@+id/rulesTitle"
         android:layout_marginTop="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="VRSTA IGRE"
+        android:text="PRAVILA"
         android:textSize="50dp"
         android:textColor="@color/white"
         android:shadowColor="#000000"
@@ -28,19 +28,19 @@
         android:layout_gravity="center"/>
 
     <Button
-        android:id="@+id/autobusStart"
+        android:id="@+id/autobusRulesButton"
         android:layout_width="181dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="70dp"
         android:backgroundTint="@color/teal_200"
         android:text="Autobus" />
-    
+
     <androidx.fragment.app.FragmentContainerView
         android:layout_width="300dp"
         android:layout_height="440dp"
         android:layout_gravity="center"
-        android:id="@+id/fragmentContainer" />
+        android:id="@+id/fragmentContainerRules" />
 
 
 

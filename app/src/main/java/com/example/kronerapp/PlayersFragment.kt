@@ -27,6 +27,8 @@ class PlayersFragment : Fragment() {
 
         var playerOneName = binding.playerOne as EditText
         val playerTwoName = binding.playerTwo as EditText
+        val name1 = playerOneName.text
+        val name2 = playerTwoName.text
 
         binding.startGameButton.setOnClickListener{
             if(playerOneName.text.length<=0 || playerTwoName.text.length<=0){
@@ -35,7 +37,9 @@ class PlayersFragment : Fragment() {
             else{
             Toast.makeText(activity, "${playerOneName.text} vs. ${playerTwoName.text} ", Toast.LENGTH_SHORT).show()
             val intent = Intent (getActivity(), GameActivity::class.java)
-            getActivity()?.startActivity(intent)
+                intent.putExtra("playerOneName",name1.toString())
+                intent.putExtra("playerTwoName",name2.toString())
+                getActivity()?.startActivity(intent)
             }
 
         }
