@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "358876490906",
+    "firebase_url": "https://kronerstats-default-rtdb.firebaseio.com",
+    "project_id": "kronerstats",
+    "storage_bucket": "kronerstats.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:358876490906:android:87a11d639ab00ac6220323",
+        "android_client_info": {
+          "package_name": "com.example.kronerapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "358876490906-snrth4hu8prq8s3qjr4ivhtda485m0b3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCe1VviWZ5HrZtOPYi37EBOw5--tyBZ7Fo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "358876490906-snrth4hu8prq8s3qjr4ivhtda485m0b3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -124,7 +124,9 @@
         android:textSize="10dp"
         android:textColor="@color/white"
         android:gravity="center"
-        android:layout_marginVertical="180dp" />
+        android:layout_marginVertical="180dp"
+        android:shadowColor="#000000"
+        android:shadowRadius="30.0"/>
     <TextView
         android:layout_width="400dp"
         android:layout_height="50dp"
@@ -137,7 +139,10 @@
         android:textStyle="bold|italic"
         android:gravity="center"
         android:layout_marginVertical="200dp"
-        android:id="@+id/playerTag"/>
+        android:id="@+id/playerTag"
+        android:shadowColor="#000000"
+        android:shadowRadius="8.0"
+        />
 
     <TextView
         android:layout_width="100dp"
@@ -150,7 +155,9 @@
         android:gravity="center"
         android:layout_marginVertical="540dp"
         android:layout_marginRight="200dp"
-        android:id="@+id/cardsDeck"/>
+        android:id="@+id/cardsDeck"
+        android:shadowColor="#000000"
+        android:shadowRadius="10.0"/>
 
     <TextView
         android:layout_width="100dp"
@@ -164,6 +171,8 @@
         android:layout_marginVertical="500dp"
         android:layout_marginRight="200dp"
         android:id="@+id/roundNumber"
+        android:shadowColor="#000000"
+        android:shadowRadius="10.0"
         />
 
     <TextView
@@ -177,7 +186,9 @@
         android:gravity="center"
         android:layout_marginVertical="540dp"
         android:layout_marginLeft="210dp"
-        android:id="@+id/playerTwoSips"/>
+        android:id="@+id/playerTwoSips"
+        android:shadowColor="#000000"
+        android:shadowRadius="15.0"/>
 
     <TextView
         android:layout_width="130dp"
@@ -190,7 +201,9 @@
         android:gravity="center"
         android:layout_marginVertical="500dp"
         android:layout_marginLeft="210dp"
-        android:id="@+id/playerOneSips"/>
+        android:id="@+id/playerOneSips"
+        android:shadowColor="#000000"
+        android:shadowRadius="15.0"/>
 
     <Button
         android:id="@+id/higherButton"
@@ -201,6 +214,7 @@
         android:layout_marginLeft="75dp"
         android:layout_marginBottom="25dp"
         android:backgroundTint="@color/dark_green"
+        android:textColor="@color/white"
         android:text="VEĆA" />
 
     <Button
@@ -212,6 +226,7 @@
         android:layout_marginBottom="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
         android:backgroundTint="@color/dark_green"
+        android:textColor="@color/white"
         android:text="MANJA" />
 
     <Button

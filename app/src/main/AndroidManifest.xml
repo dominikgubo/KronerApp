@@ -4,17 +4,17 @@
 
     <application
         android:allowBackup="true"
+        android:largeHeap="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/Kroner"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.KronerApp">
-        <activity android:name=".RulesActivity"></activity>
-        <activity
-            android:name=".GameActivity"
+        <activity android:name=".LocalStatisticsActivity"></activity>
+        <activity android:name=".RulesActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".RulesSelectActivity"
+            android:name=".GameActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ModeActivity"
