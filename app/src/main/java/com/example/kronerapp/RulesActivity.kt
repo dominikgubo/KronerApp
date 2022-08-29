@@ -22,6 +22,7 @@ class RulesActivity : AppCompatActivity() {
             setFragment(AutobusRulesFragment())
         }
         YoYo.with(Techniques.Shake).duration(2500).repeat(Animation.INFINITE).playOn(binding.rulesTitle)
+
     }
 
     private fun setFragment(fragment: Fragment) {

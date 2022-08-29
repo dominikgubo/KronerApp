@@ -16,6 +16,7 @@ import kotlin.random.Random
 import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import androidx.core.graphics.drawable.toBitmap
 import com.example.kronerapp.Card
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -93,7 +94,7 @@ class GameActivity : AppCompatActivity() {
         }
         fun openWarningDialog(){
             if(binding.playerTag.text==playerOneName){
-                MaterialAlertDialogBuilder(this).setTitle("Upozorenje")
+                MaterialAlertDialogBuilder(this, R.style.DialogTheme).setTitle("Upozorenje")
                         .setMessage("Jel ste sigurni da želite predati igru? Ako predate [[ ${playerTwoName.toString()} ]] će pobijediti.").setNegativeButton("Nastavi", object : DialogInterface.OnClickListener{
                             override fun onClick(dialog: DialogInterface?, which: Int) {
                             //    Log.d("Continue", "Game continues.")
@@ -121,7 +122,7 @@ class GameActivity : AppCompatActivity() {
                         }).show()
             }
             else{
-                MaterialAlertDialogBuilder(this).setTitle("Upozorenje")
+                MaterialAlertDialogBuilder(this, R.style.DialogTheme).setTitle("Upozorenje")
                         .setMessage("Jel ste sigurni da želite predati igru? Ako predate [[ ${playerOneName.toString()} ]] će pobijediti.").setNegativeButton("Nastavi", object : DialogInterface.OnClickListener{
                             override fun onClick(dialog: DialogInterface?, which: Int) {
                               //  Log.d("Continue", "Game continues.")
