@@ -38,9 +38,6 @@ class GameActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         var kronerDbRef = FirebaseDatabase.getInstance().getReference().child("Kroner")
-        var sharedPref = getSharedPreferences("KronerStats", Context.MODE_PRIVATE)
-        var editor = sharedPref.edit()
-
 
         val playerOneName = intent.getStringExtra("playerOneName")
         val playerTwoName = intent.getStringExtra("playerTwoName")
@@ -107,15 +104,6 @@ class GameActivity : AppCompatActivity() {
                                 val formatted = current.format(formatter)
                                 val fbStats = GameStats("${playerOneName} - broj gutljajeva: ${pOneSips}", "${playerTwoName} - broj gutljajeva: ${pTwoSips}", "Pobjednik: ${playerTwoName}", formatted.toString(), "Broj odigranih rundi: ${round}")
                                 kronerDbRef.push().setValue(fbStats)
-                                editor.apply {
-                                    putString("playerOneSips", "${playerOneName} - broj gutljajeva: ${pOneSips}")
-                                    putString("playerTwoSips", "${playerTwoName} - broj gutljajeva: ${pTwoSips}")
-                                    putString("winner", "Pobjednik: ${playerTwoName}")
-                                    putString("time", SimpleDateFormat("dd/M/yyyy hh:mm:ss").format(Date()).toString())
-                                    putString("round", "Broj odigranih rundi: ${round}")
-                                    apply()
-                                }
-
                                 var intent = Intent(this@GameActivity , MainActivity::class.java)
                                 startActivity(intent)
                             }
@@ -135,14 +123,6 @@ class GameActivity : AppCompatActivity() {
                                 val formatted = current.format(formatter)
                                 val fbStats = GameStats("${playerOneName} - broj gutljajeva: ${pOneSips}", "${playerTwoName} - broj gutljajeva: ${pTwoSips}", "Pobjednik: ${playerOneName}", formatted.toString(), "Broj odigranih rundi: ${round}")
                                 kronerDbRef.push().setValue(fbStats)
-                                editor.apply {
-                                    putString("playerOneSips", "${playerOneName} - broj gutljajeva: ${pOneSips}")
-                                    putString("playerTwoSips", "${playerTwoName} - broj gutljajeva: ${pTwoSips}")
-                                    putString("winner", "Pobjednik: ${playerOneName}")
-                                    putString("time", SimpleDateFormat("dd/M/yyyy hh:mm:ss").format(Date()).toString())
-                                    putString("round", "Broj odigranih rundi: ${round}")
-                                    apply()
-                                }
                                 var intent = Intent(this@GameActivity , MainActivity::class.java)
                                 startActivity(intent)
                             }
