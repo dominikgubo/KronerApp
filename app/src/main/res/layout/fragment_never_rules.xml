@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@drawable/custom_fragment">
+
+    <TextView
+        android:layout_width="300dp"
+        android:textAlignment="center"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:text="🙅 Never have I ever pravila"
+        android:textSize="30dp"
+        android:layout_marginTop="30dp"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/black"
+        />
+
+    <TextView
+        android:textColor="@color/black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:text="Unutar gamemoda pohranjeno je 150 basic upita raznih tematika. Moguće je proširiti igru sa dostupnim dodatnim paketima od kojih svaki sadrži 50 pitanja. Igra je osmišljena tako da na postavljen 'Never have I ever / Nisam nikada' upit sudionici piju gutljaj svog pića ako su ipak doživjeli jednu od navedenih situacija, a ako nisu preskaču krug."
+        android:gravity="left"
+        android:textSize="17dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="140dp"
+        android:layout_marginLeft="10dp"
+        android:justificationMode="inter_word"/>
+
+</RelativeLayout>

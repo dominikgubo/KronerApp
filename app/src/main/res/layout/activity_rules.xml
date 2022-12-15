@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/pattern"
+    android:backgroundTint="#30000000"
+    android:backgroundTintMode="src_over"
     tools:context=".RulesActivity">
 
     <TextView
@@ -37,6 +39,26 @@
         android:textColor="@color/white"
         android:text="Autobus" />
 
+    <Button
+        android:id="@+id/neverRulesButton"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="70dp"
+        android:background="@drawable/custom_button"
+        android:textColor="@color/white"
+        android:text="Never have i ever" />
+
+    <Button
+        android:id="@+id/kingRulesButton"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="70dp"
+        android:background="@drawable/custom_button"
+        android:textColor="@color/white"
+        android:text="Kings cup" />
+
     <androidx.fragment.app.FragmentContainerView
         android:layout_marginTop="30dp"
         android:layout_width="300dp"
@@ -44,6 +66,7 @@
         android:layout_gravity="center"
         android:id="@+id/fragmentContainerRules"
         />
+
 
 
 

@@ -2,53 +2,65 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:background="@drawable/custom_fragment"
+    android:scrollbars = "vertical"
 
     >
 
     <TextView
+        android:textColor="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textStyle="bold"
         android:text="Unesite dva igrača"
-        android:textSize="32dp"
+        android:textSize="30dp"
         android:layout_marginTop="30dp"
         android:layout_centerHorizontal="true"
         />
 
     <TextView
+        android:textColor="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textStyle="bold"
-        android:text="Igrač 1:"
+        android:text="Igrač 1 / Tim 1:"
         android:textSize="22dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="130dp"
-        android:layout_marginLeft="10dp" />
+        android:layout_marginLeft="10dp"
+        />
 
     <EditText
+        android:textColor="@color/black"
         android:layout_width="170dp"
         android:textSize="25dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="170dp"
         android:layout_centerHorizontal="true"
-
-        android:id="@+id/playerOne"/>
+        android:id="@+id/playerOne"
+        android:maxLines="1"
+        android:inputType="text"
+        android:maxLength="15"/>
     <TextView
+        android:textColor="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textStyle="bold"
-        android:text="Igrač 2:"
+        android:text="Igrač 2 / Tim 2:"
         android:textSize="22dp"
         android:layout_marginTop="250dp"
         android:layout_centerHorizontal="true"/>
 
     <EditText
+        android:textColor="@color/black"
         android:layout_width="160dp"
         android:layout_height="wrap_content"
         android:textSize="25dp"
         android:layout_marginTop="280dp"
         android:layout_centerHorizontal="true"
-        android:id="@+id/playerTwo"/>
+        android:id="@+id/playerTwo"
+        android:maxLines="1"
+        android:inputType="text"
+        android:maxLength="15"/>
 
     <Button
         android:layout_width="150dp"

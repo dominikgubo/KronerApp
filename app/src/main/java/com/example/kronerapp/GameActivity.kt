@@ -1,8 +1,8 @@
 package com.example.kronerapp
 
-import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.media.MediaPlayer
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -11,17 +11,16 @@ import androidx.core.view.isVisible
 import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
 import com.example.kronerapp.databinding.ActivityGameBinding
-import com.example.kronerapp.databinding.ActivityMainBinding
 import kotlin.random.Random
 import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AlertDialog
-import androidx.core.graphics.drawable.toBitmap
-import com.example.kronerapp.Card
+import com.example.kronerapp.classes.Card
+import com.example.kronerapp.classes.GameStats
+import com.example.kronerapp.classes.MusicMethod
+import com.example.kronerapp.classes.SoundMethod
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.database.FirebaseDatabase
-import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
@@ -31,6 +30,9 @@ import java.util.*
 class GameActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityGameBinding
+    var cardMediaPlayer: MediaPlayer? = null
+    var beepMediaPlayer: MediaPlayer? = null
+    
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,10 +49,10 @@ class GameActivity : AppCompatActivity() {
         var cardsDeck = 28
         var currentPlayer = arrayOf(playerOneName, playerTwoName)
         var currentPlayerIndex = 0
-
+        MusicMethod.player.start()
         binding.playerTag.text = currentPlayer[currentPlayerIndex]
-        binding.playerOneSips.text = "${playerOneName} broj gutljajeva: ${pOneSips.toString()}"
-        binding.playerTwoSips.text = "${playerTwoName} broj gutljajeva: ${pTwoSips.toString()}"
+        binding.playerOneSips.text = "${playerOneName} broj gutljaja: ${pOneSips.toString()}"
+        binding.playerTwoSips.text = "${playerTwoName} broj gutljaja: ${pTwoSips.toString()}"
         binding.roundNumber.text = "Runda broj: ${round.toString()}"
         binding.cardsDeck.text = "Karti u špilu: ${cardsDeck.toString()}"
 
@@ -89,6 +91,8 @@ class GameActivity : AppCompatActivity() {
             binding.fourthSelector.isVisible = false
             YoYo.with(Techniques.Bounce).duration(1500).repeat(Animation.INFINITE).playOn(binding.firstSelector)
         }
+
+
         fun openWarningDialog(){
             if(binding.playerTag.text==playerOneName){
                 MaterialAlertDialogBuilder(this, R.style.DialogTheme).setTitle("Upozorenje")
@@ -102,10 +106,12 @@ class GameActivity : AppCompatActivity() {
                                 val current = LocalDateTime.now()
                                 val formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)
                                 val formatted = current.format(formatter)
-                                val fbStats = GameStats("${playerOneName} - broj gutljajeva: ${pOneSips}", "${playerTwoName} - broj gutljajeva: ${pTwoSips}", "Pobjednik: ${playerTwoName}", formatted.toString(), "Broj odigranih rundi: ${round}")
+                                val fbStats = GameStats("${playerOneName} - broj gutljaja: ${pOneSips}", "${playerTwoName} - broj gutljaja: ${pTwoSips}", "Pobjednik: ${playerTwoName}", formatted.toString(), "Broj odigranih rundi: ${round}")
                                 kronerDbRef.push().setValue(fbStats)
                                 var intent = Intent(this@GameActivity , MainActivity::class.java)
                                 startActivity(intent)
+                                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                                finish()
                             }
                         }).show()
             }
@@ -121,14 +127,17 @@ class GameActivity : AppCompatActivity() {
                                 val current = LocalDateTime.now()
                                 val formatter = DateTimeFormatter.ofLocalizedDateTime(FormatStyle.MEDIUM)
                                 val formatted = current.format(formatter)
-                                val fbStats = GameStats("${playerOneName} - broj gutljajeva: ${pOneSips}", "${playerTwoName} - broj gutljajeva: ${pTwoSips}", "Pobjednik: ${playerOneName}", formatted.toString(), "Broj odigranih rundi: ${round}")
+                                val fbStats = GameStats("${playerOneName} - broj gutljaja: ${pOneSips}", "${playerTwoName} - broj gutljaja: ${pTwoSips}", "Pobjednik: ${playerOneName}", formatted.toString(), "Broj odigranih rundi: ${round}")
                                 kronerDbRef.push().setValue(fbStats)
                                 var intent = Intent(this@GameActivity , MainActivity::class.java)
                                 startActivity(intent)
+                                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                                finish()
                             }
                         }).show()
             }
         }
+
 
         binding.surrenderButton.setOnClickListener {
             openWarningDialog()
@@ -136,7 +145,7 @@ class GameActivity : AppCompatActivity() {
 
 
         binding.higherButton.setOnClickListener {
-
+            SoundMethod.SoundPlayerNoLoop(this,R.raw.cardflip)
             when (positionCounter) {
                 0 -> {
                     if(UsingDeck.cardId.size==0){
@@ -146,15 +155,16 @@ class GameActivity : AppCompatActivity() {
                         binding.cardsDeck.text = "Karti u špilu: ${cardsDeck.toString()}"
                         if (playerOneName == currentPlayer[currentPlayerIndex]) {
                             pOneSips +=10
-                            binding.playerOneSips.text = "${playerOneName} broj gutljajeva: ${pOneSips.toString()}"
+                            binding.playerOneSips.text = "${playerOneName} broj gutljaja: ${pOneSips.toString()}"
                         } else {
                             pTwoSips +=10
-                            binding.playerTwoSips.text = "${playerTwoName} broj gutljajeva: ${pTwoSips.toString()}"
+                            binding.playerTwoSips.text = "${playerTwoName} broj gutljaja: ${pTwoSips.toString()}"
                         }
                     }
-                    var random = Random.nextInt(UsingDeck.cardId.size)
-                    if(UsingDeck.cardId.size==0){
-                        var random = 0
+                    var random = if(UsingDeck.cardId.size==0){
+                        0
+                    } else{
+                        Random.nextInt(UsingDeck.cardId.size)
                     }
 //                    Log.d("TEST1PRVA", UsingDeck.cardId.size.toString())
 //                    Log.d("TEST1PRVA22", UsingDeck.cardValue.size.toString())
@@ -194,10 +204,10 @@ class GameActivity : AppCompatActivity() {
 
                         if (playerOneName == currentPlayer[currentPlayerIndex]) {
                             pOneSips++
-                            binding.playerOneSips.text = "${playerOneName} broj gutljajeva: ${pOneSips.toString()}"
+                            binding.playerOneSips.text = "${playerOneName} broj gutljaja: ${pOneSips.toString()}"
                         } else {
                             pTwoSips++
-                            binding.playerTwoSips.text = "${playerTwoName} broj gutljajeva: ${pTwoSips.toString()}"
+                            binding.playerTwoSips.text = "${playerTwoName} broj gutljaja: ${pTwoSips.toString()}"
                         }
                         random1 = random
                         random1Value = UsingDeck.cardValue[random]
@@ -215,15 +225,16 @@ class GameActivity : AppCompatActivity() {
                         binding.cardsDeck.text = "Karti u špilu: ${cardsDeck.toString()}"
                         if (playerOneName == currentPlayer[currentPlayerIndex]) {
                             pOneSips +=10
-                            binding.playerOneSips.text = "${playerOneName} broj gutljajeva: ${pOneSips.toString()}"
+                            binding.playerOneSips.text = "${playerOneName} broj gutljaja: ${pOneSips.toString()}"
                         } else {
                             pTwoSips +=10
-                            binding.playerTwoSips.text = "${playerTwoName} broj gutljajeva: ${pTwoSips.toString()}"
+                            binding.playerTwoSips.text = "${playerTwoName} broj gutljaja: ${pTwoSips.toString()}"
                         }
                     }
-                    var random = Random.nextInt(UsingDeck.cardId.size)
-                    if(UsingDeck.cardId.size==0){
-                        var random = 0
+                    var random = if(UsingDeck.cardId.size==0){
+                        0
+                    } else{
+                        Random.nextInt(UsingDeck.cardId.size)
                     }
 //                    Log.d("TEST2druga", UsingDeck.cardId.size.toString())
 //                    Log.d("TESTdruga2222ZNACIZASIZE", UsingDeck.cardValue.size.toString())
@@ -257,10 +268,10 @@ class GameActivity : AppCompatActivity() {
 
                         if (playerOneName == currentPlayer[currentPlayerIndex]) {
                             pOneSips = pOneSips + 2
-                            binding.playerOneSips.text = "${playerOneName} broj gutljajeva: ${pOneSips.toString()}"
+                            binding.playerOneSips.text = "${playerOneName} broj gutljaja: ${pOneSips.toString()}"
                         } else {
                             pTwoSips = pTwoSips + 2
-                            binding.playerTwoSips.text = "${playerTwoName} broj gutljajeva: ${pTwoSips.toString()}"
+                            binding.playerTwoSips.text = "${playerTwoName} broj gutljaja: ${pTwoSips.toString()}"
                         }
                         random2 = random
                         random2Value = UsingDeck.cardValue[random]
@@ -277,15 +288,16 @@ class GameActivity : AppCompatActivity() {
                         binding.cardsDeck.text = "Karti u špilu: ${cardsDeck.toString()}"
                         if (playerOneName == currentPlayer[currentPlayerIndex]) {
                             pOneSips +=10
-                            binding.playerOneSips.text = "${playerOneName} broj gutljajeva: ${pOneSips.toString()}"
+                            binding.playerOneSips.text = "${playerOneName} broj gutljaja: ${pOneSips.toString()}"
                         } else {
                             pTwoSips +=10
-                            binding.playerTwoSips.text = "${playerTwoName} broj gutljajeva: ${pTwoSips.toString()}"
+                            binding.playerTwoSips.text = "${playerTwoName} broj gutljaja: ${pTwoSips.toString()}"
                         }
                     }
-                    var random = Random.nextInt(UsingDeck.cardId.size)
-                    if(UsingDeck.cardId.size==0){
-                        var random = 0
+                    var random = if(UsingDeck.cardId.size==0){
+                        0
+                    } else{
+                        Random.nextInt(UsingDeck.cardId.size)
                     }
 //                    Log.d("TEST3TRECA:", UsingDeck.cardId.size.toString())
 
@@ -320,10 +332,10 @@ class GameActivity : AppCompatActivity() {
 
                         if (playerOneName == currentPlayer[currentPlayerIndex]) {
                             pOneSips = pOneSips + 3
-                            binding.playerOneSips.text = "${playerOneName} broj gutljajeva: ${pOneSips.toString()}"
+                            binding.playerOneSips.text = "${playerOneName} broj gutljaja: ${pOneSips.toString()}"
                         } else {
                             pTwoSips = pTwoSips + 3
-                            binding.playerTwoSips.text = "${playerTwoName} broj gutljajeva: ${pTwoSips.toString()}"
+                            binding.playerTwoSips.text = "${playerTwoName} broj gutljaja: ${pTwoSips.toString()}"
                         }
                         random3 = random
                         random3Value = UsingDeck.cardValue[random]
@@ -341,16 +353,17 @@ class GameActivity : AppCompatActivity() {
                         binding.cardsDeck.text = "Karti u špilu: ${cardsDeck.toString()}"
                         if (playerOneName == currentPlayer[currentPlayerIndex]) {
                             pOneSips +=10
-                            binding.playerOneSips.text = "${playerOneName} broj gutljajeva: ${pOneSips.toString()}"
+                            binding.playerOneSips.text = "${playerOneName} broj gutljaja: ${pOneSips.toString()}"
                         } else {
                             pTwoSips +=10
-                            binding.playerTwoSips.text = "${playerTwoName} broj gutljajeva: ${pTwoSips.toString()}"
+                            binding.playerTwoSips.text = "${playerTwoName} broj gutljaja: ${pTwoSips.toString()}"
                         }
                     }
                    // Log.d("ID", UsingDeck.cardId.toString())
-                    var random = Random.nextInt(UsingDeck.cardId.size)
-                    if(UsingDeck.cardId.size==0){
-                        var random = 0
+                    var random = if(UsingDeck.cardId.size==0){
+                        0
+                    } else{
+                        Random.nextInt(UsingDeck.cardId.size)
                     }
 //                    Log.d("TEST4CETVRTA", UsingDeck.cardId.size.toString())
 
@@ -361,13 +374,47 @@ class GameActivity : AppCompatActivity() {
                        // Log.d("Values", "Random iznosi ${UsingDeck.cardValue[random]}, Random4 iznosi ${UsingDeck.cardValue[random4]}")
                         positionCounter++
                         if (positionCounter == 4) {
+                            SoundMethod.SoundPlayerNoLoop(this,R.raw.beep)
                             positionCounter = 0
                             binding.firstSelector.isVisible = true
                             binding.secondSelector.isVisible = false
                             binding.thirdSelector.isVisible = false
                             binding.fourthSelector.isVisible = false
+                            UsingDeck.refillCards()
+
+                            YoYo.with(Techniques.Landing).duration(1500).repeat(0).playOn(binding.firstCard)
+                            YoYo.with(Techniques.Landing).duration(1500).repeat(0).playOn(binding.secondCard)
+                            YoYo.with(Techniques.Landing).duration(1500).repeat(0).playOn(binding.thirdCard)
+                            YoYo.with(Techniques.Landing).duration(1500).repeat(0).playOn(binding.fourthCard)
+
+                            random1 = Random.nextInt(UsingDeck.cardId.size-1)
+                            binding.firstCard.setImageResource(UsingDeck.cardId[random1])
+                            random1Value=UsingDeck.cardValue[random1]
+                            UsingDeck.cardId.removeAt(random1)
+                            UsingDeck.cardValue.removeAt(random1)
+
+                            random2 = Random.nextInt(UsingDeck.cardId.size-1)
+                            binding.secondCard.setImageResource(UsingDeck.cardId[random2])
+                            random2Value=UsingDeck.cardValue[random2]
+                            UsingDeck.cardId.removeAt(random2)
+                            UsingDeck.cardValue.removeAt(random2)
+
+                            random3 = Random.nextInt(UsingDeck.cardId.size-1)
+                            binding.thirdCard.setImageResource(UsingDeck.cardId[random3])
+                            random3Value=UsingDeck.cardValue[random3]
+                            UsingDeck.cardId.removeAt(random3)
+                            UsingDeck.cardValue.removeAt(random3)
+
+                            random4 = Random.nextInt(UsingDeck.cardId.size-1)
+                            binding.fourthCard.setImageResource(UsingDeck.cardId[random4])
+                            random4Value=UsingDeck.cardValue[random4]
+                            UsingDeck.cardId.removeAt(random4)
+                            UsingDeck.cardValue.removeAt(random4)
+
+                            cardsDeck=28
+                            binding.cardsDeck.text = "Karti u špilu: ${cardsDeck.toString()}"
                             YoYo.with(Techniques.Bounce).duration(1500).repeat(Animation.INFINITE).playOn(binding.firstSelector)
-                            Toast.makeText(this, "Igrač [[ ${currentPlayer[currentPlayerIndex].toString()} ]] je izašao iz busa", Toast.LENGTH_LONG).show()
+                            Toast.makeText(this, "Igrač: ${currentPlayer[currentPlayerIndex].toString()} je izašao iz busa", Toast.LENGTH_LONG).show()
                             currentPlayerIndex++
                             if (currentPlayerIndex >= 2) {
                                 currentPlayerIndex = 0
@@ -380,15 +427,11 @@ class GameActivity : AppCompatActivity() {
 
                             if (playerOneName == currentPlayer[currentPlayerIndex]) {
                                 pOneSips = pOneSips + 4
-                                binding.playerOneSips.text = "${playerOneName} broj gutljajeva: ${pOneSips.toString()}"
+                                binding.playerOneSips.text = "${playerOneName} broj gutljaja: ${pOneSips.toString()}"
                             } else {
                                 pTwoSips = pTwoSips + 4
-                                binding.playerTwoSips.text = "${playerTwoName} broj gutljajeva: ${pTwoSips.toString()}"
+                                binding.playerTwoSips.text = "${playerTwoName} broj gutljaja: ${pTwoSips.toString()}"
                             }
-                            random4 = random
-                            random4Value = UsingDeck.cardValue[random]
-                            UsingDeck.cardId.removeAt(random)
-                            UsingDeck.cardValue.removeAt(random)
                         }
                     }  else {
                         positionCounter = 0
@@ -401,10 +444,10 @@ class GameActivity : AppCompatActivity() {
 
                         if (playerOneName == currentPlayer[currentPlayerIndex]) {
                             pOneSips = pOneSips + 4
-                            binding.playerOneSips.text = "${playerOneName} broj gutljajeva: ${pOneSips.toString()}"
+                            binding.playerOneSips.text = "${playerOneName} broj gutljaja: ${pOneSips.toString()}"
                         } else {
                             pTwoSips = pTwoSips + 4
-                            binding.playerTwoSips.text = "${playerTwoName} broj gutljajeva: ${pTwoSips.toString()}"
+                            binding.playerTwoSips.text = "${playerTwoName} broj gutljaja: ${pTwoSips.toString()}"
                         }
                         random4 = random
                         random4Value = UsingDeck.cardValue[random]
@@ -417,7 +460,7 @@ class GameActivity : AppCompatActivity() {
         }
 
         binding.lowerButton.setOnClickListener {
-
+            SoundMethod.SoundPlayerNoLoop(this,R.raw.cardflip)
             when (positionCounter) {
                 0 -> {
                     if(cardsDeck==0){
@@ -426,15 +469,16 @@ class GameActivity : AppCompatActivity() {
                         binding.cardsDeck.text = "Karti u špilu: ${cardsDeck.toString()}"
                         if (playerOneName == currentPlayer[currentPlayerIndex]) {
                             pOneSips +=10
-                            binding.playerOneSips.text = "${playerOneName} broj gutljajeva: ${pOneSips.toString()}"
+                            binding.playerOneSips.text = "${playerOneName} broj gutljaja: ${pOneSips.toString()}"
                         } else {
                             pTwoSips +=10
-                            binding.playerTwoSips.text = "${playerTwoName} broj gutljajeva: ${pTwoSips.toString()}"
+                            binding.playerTwoSips.text = "${playerTwoName} broj gutljaja: ${pTwoSips.toString()}"
                         }
                     }
-                    var random = Random.nextInt(UsingDeck.cardId.size)
-                    if(UsingDeck.cardId.size==0){
-                        var random = 0
+                    var random = if(UsingDeck.cardId.size==0){
+                        0
+                    } else{
+                        Random.nextInt(UsingDeck.cardId.size)
                     }
                     binding.firstCard.setImageResource(UsingDeck.cardId[random])
                     cardsDeck--
@@ -470,10 +514,10 @@ class GameActivity : AppCompatActivity() {
 
                         if (playerOneName == currentPlayer[currentPlayerIndex]) {
                             pOneSips++
-                            binding.playerOneSips.text = "${playerOneName} broj gutljajeva: ${pOneSips.toString()}"
+                            binding.playerOneSips.text = "${playerOneName} broj gutljaja: ${pOneSips.toString()}"
                         } else {
                             pTwoSips++
-                            binding.playerTwoSips.text = "${playerTwoName} broj gutljajeva: ${pTwoSips.toString()}"
+                            binding.playerTwoSips.text = "${playerTwoName} broj gutljaja: ${pTwoSips.toString()}"
                         }
                         random1 = random
                         random1Value = UsingDeck.cardValue[random]
@@ -490,15 +534,16 @@ class GameActivity : AppCompatActivity() {
                         binding.cardsDeck.text = "Karti u špilu: ${cardsDeck.toString()}"
                         if (playerOneName == currentPlayer[currentPlayerIndex]) {
                             pOneSips +=10
-                            binding.playerOneSips.text = "${playerOneName} broj gutljajeva: ${pOneSips.toString()}"
+                            binding.playerOneSips.text = "${playerOneName} broj gutljaja: ${pOneSips.toString()}"
                         } else {
                             pTwoSips +=10
-                            binding.playerTwoSips.text = "${playerTwoName} broj gutljajeva: ${pTwoSips.toString()}"
+                            binding.playerTwoSips.text = "${playerTwoName} broj gutljaja: ${pTwoSips.toString()}"
                         }
                     }
-                    var random = Random.nextInt(UsingDeck.cardId.size)
-                    if(UsingDeck.cardId.size==0){
-                        var random = 0
+                    var random = if(UsingDeck.cardId.size==0){
+                        0
+                    } else{
+                        Random.nextInt(UsingDeck.cardId.size)
                     }
                     binding.secondCard.setImageResource(UsingDeck.cardId[random])
                     cardsDeck--
@@ -528,10 +573,10 @@ class GameActivity : AppCompatActivity() {
 
                         if (playerOneName == currentPlayer[currentPlayerIndex]) {
                             pOneSips = pOneSips + 2
-                            binding.playerOneSips.text = "${playerOneName} broj gutljajeva: ${pOneSips.toString()}"
+                            binding.playerOneSips.text = "${playerOneName} broj gutljaja: ${pOneSips.toString()}"
                         } else {
                             pTwoSips = pTwoSips + 2
-                            binding.playerTwoSips.text = "${playerTwoName} broj gutljajeva: ${pTwoSips.toString()}"
+                            binding.playerTwoSips.text = "${playerTwoName} broj gutljaja: ${pTwoSips.toString()}"
                         }
                         random2 = random
                         random2Value = UsingDeck.cardValue[random]
@@ -547,15 +592,16 @@ class GameActivity : AppCompatActivity() {
                         binding.cardsDeck.text = "Karti u špilu: ${cardsDeck.toString()}"
                         if (playerOneName == currentPlayer[currentPlayerIndex]) {
                             pOneSips +=10
-                            binding.playerOneSips.text = "${playerOneName} broj gutljajeva: ${pOneSips.toString()}"
+                            binding.playerOneSips.text = "${playerOneName} broj gutljaja: ${pOneSips.toString()}"
                         } else {
                             pTwoSips +=10
-                            binding.playerTwoSips.text = "${playerTwoName} broj gutljajeva: ${pTwoSips.toString()}"
+                            binding.playerTwoSips.text = "${playerTwoName} broj gutljaja: ${pTwoSips.toString()}"
                         }
                     }
-                    var random = Random.nextInt(UsingDeck.cardId.size)
-                    if(UsingDeck.cardId.size==0){
-                        var random = 0
+                    var random = if(UsingDeck.cardId.size==0){
+                        0
+                    } else{
+                        Random.nextInt(UsingDeck.cardId.size)
                     }
                     binding.thirdCard.setImageResource(UsingDeck.cardId[random])
                     cardsDeck--
@@ -585,10 +631,10 @@ class GameActivity : AppCompatActivity() {
 
                         if (playerOneName == currentPlayer[currentPlayerIndex]) {
                             pOneSips = pOneSips + 3
-                            binding.playerOneSips.text = "${playerOneName} broj gutljajeva: ${pOneSips.toString()}"
+                            binding.playerOneSips.text = "${playerOneName} broj gutljaja: ${pOneSips.toString()}"
                         } else {
                             pTwoSips = pTwoSips + 3
-                            binding.playerTwoSips.text = "${playerTwoName} broj gutljajeva: ${pTwoSips.toString()}"
+                            binding.playerTwoSips.text = "${playerTwoName} broj gutljaja: ${pTwoSips.toString()}"
                         }
                         random3 = random
                         random3Value = UsingDeck.cardValue[random]
@@ -605,16 +651,17 @@ class GameActivity : AppCompatActivity() {
                         binding.cardsDeck.text = "Karti u špilu: ${cardsDeck.toString()}"
                         if (playerOneName == currentPlayer[currentPlayerIndex]) {
                             pOneSips +=10
-                            binding.playerOneSips.text = "${playerOneName} broj gutljajeva: ${pOneSips.toString()}"
+                            binding.playerOneSips.text = "${playerOneName} broj gutljaja: ${pOneSips.toString()}"
                         } else {
                             pTwoSips +=10
-                            binding.playerTwoSips.text = "${playerTwoName} broj gutljajeva: ${pTwoSips.toString()}"
+                            binding.playerTwoSips.text = "${playerTwoName} broj gutljaja: ${pTwoSips.toString()}"
                         }
                     }
 
-                    var random = Random.nextInt(UsingDeck.cardId.size)
-                    if(UsingDeck.cardId.size==0){
-                        var random = 0
+                    var random = if(UsingDeck.cardId.size==0){
+                        0
+                    } else{
+                        Random.nextInt(UsingDeck.cardId.size)
                     }
                     binding.fourthCard.setImageResource(UsingDeck.cardId[random])
                     cardsDeck--
@@ -624,13 +671,48 @@ class GameActivity : AppCompatActivity() {
 
                         positionCounter++
                         if (positionCounter == 4) {
+                            SoundMethod.SoundPlayerNoLoop(this,R.raw.beep)
                             positionCounter = 0
                             binding.firstSelector.isVisible = true
                             binding.secondSelector.isVisible = false
                             binding.thirdSelector.isVisible = false
                             binding.fourthSelector.isVisible = false
+                            UsingDeck.refillCards()
+
+                            YoYo.with(Techniques.Landing).duration(1500).repeat(0).playOn(binding.firstCard)
+                            YoYo.with(Techniques.Landing).duration(1500).repeat(0).playOn(binding.secondCard)
+                            YoYo.with(Techniques.Landing).duration(1500).repeat(0).playOn(binding.thirdCard)
+                            YoYo.with(Techniques.Landing).duration(1500).repeat(0).playOn(binding.fourthCard)
+
+                            random1 = Random.nextInt(UsingDeck.cardId.size-1)
+                            binding.firstCard.setImageResource(UsingDeck.cardId[random1])
+                            random1Value=UsingDeck.cardValue[random1]
+                            UsingDeck.cardId.removeAt(random1)
+                            UsingDeck.cardValue.removeAt(random1)
+
+                            random2 = Random.nextInt(UsingDeck.cardId.size-1)
+                            binding.secondCard.setImageResource(UsingDeck.cardId[random2])
+                            random2Value=UsingDeck.cardValue[random2]
+                            UsingDeck.cardId.removeAt(random2)
+                            UsingDeck.cardValue.removeAt(random2)
+
+                            random3 = Random.nextInt(UsingDeck.cardId.size-1)
+                            binding.thirdCard.setImageResource(UsingDeck.cardId[random3])
+                            random3Value=UsingDeck.cardValue[random3]
+                            UsingDeck.cardId.removeAt(random3)
+                            UsingDeck.cardValue.removeAt(random3)
+
+                            random4 = Random.nextInt(UsingDeck.cardId.size-1)
+                            binding.fourthCard.setImageResource(UsingDeck.cardId[random4])
+                            random4Value=UsingDeck.cardValue[random4]
+                            UsingDeck.cardId.removeAt(random4)
+                            UsingDeck.cardValue.removeAt(random4)
+
+                            cardsDeck=28
+                            binding.cardsDeck.text = "Karti u špilu: ${cardsDeck.toString()}"
+
                             YoYo.with(Techniques.Bounce).duration(1500).repeat(Animation.INFINITE).playOn(binding.firstSelector)
-                            Toast.makeText(this, "Igrač [[ ${currentPlayer[currentPlayerIndex].toString()} ]] je izašao iz busa", Toast.LENGTH_LONG).show()
+                            Toast.makeText(this, "Igrač: ${currentPlayer[currentPlayerIndex].toString()}  je izašao iz busa", Toast.LENGTH_LONG).show()
                             currentPlayerIndex++
                             if (currentPlayerIndex >= 2) {
                                 currentPlayerIndex = 0
@@ -640,10 +722,6 @@ class GameActivity : AppCompatActivity() {
                             round++
                             binding.roundNumber.text = "Runda broj:${round.toString()}"
                         }
-                        random4 = random
-                        random4Value = UsingDeck.cardValue[random]
-                        UsingDeck.cardId.removeAt(random)
-                        UsingDeck.cardValue.removeAt(random)
                     } else {
                         positionCounter = 0
 
@@ -655,10 +733,10 @@ class GameActivity : AppCompatActivity() {
 
                         if (playerOneName == currentPlayer[currentPlayerIndex]) {
                             pOneSips = pOneSips + 4
-                            binding.playerOneSips.text = "${playerOneName} broj gutljajeva: ${pOneSips.toString()}"
+                            binding.playerOneSips.text = "${playerOneName} broj gutljaja: ${pOneSips.toString()}"
                         } else {
                             pTwoSips = pTwoSips + 4
-                            binding.playerTwoSips.text = "${playerTwoName} broj gutljajeva: ${pTwoSips.toString()}"
+                            binding.playerTwoSips.text = "${playerTwoName} broj gutljaja: ${pTwoSips.toString()}"
                         }
                         random4 = random
                         random4Value = UsingDeck.cardValue[random]
@@ -673,4 +751,37 @@ class GameActivity : AppCompatActivity() {
 
 
         }
+
+
+    override fun onBackPressed() {
+        MaterialAlertDialogBuilder(this, R.style.DialogTheme).setTitle("Upozorenje")
+                .setMessage("Jel ste sigurni da želite izaći iz igre? ").setNegativeButton("Nastavi", object : DialogInterface.OnClickListener{
+                    override fun onClick(dialog: DialogInterface?, which: Int) {
+                        //    Log.d("Continue", "Game continues.")
+                    }
+                }).setPositiveButton("Izađi", object : DialogInterface.OnClickListener{
+                    override fun onClick(dialog: DialogInterface?, which: Int) {
+                        SoundMethod.SoundPlayerNoLoop(this@GameActivity,R.raw.menu)
+                        var intent = Intent(this@GameActivity , MainActivity::class.java)
+                        startActivity(intent)
+                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                        finish()
+                    }
+                }).show()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        if (MusicMethod.player != null) {
+            MusicMethod.player.pause()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (MusicMethod.player != null) {
+            MusicMethod.player.start()
+        }
+    }
+
     }

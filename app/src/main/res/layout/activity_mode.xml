@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/pattern"
+    android:backgroundTint="#30000000"
+    android:backgroundTintMode="src_over"
     tools:context=".ModeActivity">
 
     <TextView
@@ -29,13 +31,33 @@
 
     <Button
         android:id="@+id/autobusStart"
-        android:layout_width="181dp"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="70dp"
         android:background="@drawable/custom_button"
         android:textColor="@color/white"
         android:text="Autobus" />
+
+    <Button
+        android:id="@+id/neverStart"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="70dp"
+        android:background="@drawable/custom_button"
+        android:textColor="@color/white"
+        android:text="Never have i ever" />
+
+    <Button
+        android:id="@+id/kingStart"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="70dp"
+        android:background="@drawable/custom_button"
+        android:textColor="@color/white"
+        android:text="KINGS CUP" />
     
     <androidx.fragment.app.FragmentContainerView
         android:layout_marginTop="30dp"

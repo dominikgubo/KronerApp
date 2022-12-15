@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@drawable/custom_fragment">
+
+    <TextView
+        android:textColor="@color/black"
+        android:layout_width="300dp"
+        android:textAlignment="center"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:text="👑 Kings cup pravila "
+        android:textSize="30dp"
+        android:layout_marginTop="30dp"
+        android:layout_centerHorizontal="true"
+        />
+
+    <TextView
+        android:textColor="@color/black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textAlignment="textStart"
+        android:text="Igrači u krug izvlače karte iz špila. Svaka karta ima svoje značenje koje je objašnjeno unutar igre. Jedno od specijalnih pravila je da se uzme neka čaša i da se napuni cugom svaki put osim zadnjeg kad je izvučen kralj - igrač koji je izvukao zadnjeg kralja pije iz te čaše. Poznato još kao Ring of Fire."
+        android:gravity="left"
+        android:textSize="17dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="110dp"
+        android:layout_marginLeft="10dp"
+        android:justificationMode="inter_word"/>
+
+</RelativeLayout>

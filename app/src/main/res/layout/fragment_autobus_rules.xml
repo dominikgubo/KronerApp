@@ -4,27 +4,27 @@
     android:background="@drawable/custom_fragment">
 
     <TextView
+        android:textColor="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textStyle="bold"
-        android:text="Autobus pravila"
+        android:text="🚍 Autobus pravila"
         android:textSize="30dp"
         android:layout_marginTop="30dp"
         android:layout_centerHorizontal="true"
         />
 
     <TextView
+        android:textColor="@color/black"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textStyle="bold"
         android:text="Dva igrača igraju autobus. Podjele se četiri nasumične karte i cilj je četiri puta uzastopno pogoditi jel karta veća ili manja od one postavljene. Ako igrač pogriješi pije jednako toliko gutljajeva na broju karte na kojem je stao. Npr. igrač na trećoj karti pogriješi - pije tri gutljaja svog pića. Ako se čitav špil potroši bez da je igrač izašao iz 'autobusa', on pije 10 gutljajeva ili na eks. Kada pogodi sve karte te izađe, igrači se mijenjaju. Cilj je ostati što duže u igri bez predaje, tko se preda gubi."
-        android:gravity="center"
+        android:gravity="left"
         android:textSize="17dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="110dp"
-        android:layout_marginLeft="10dp" />
-
-
-
+        android:layout_marginLeft="10dp"
+        android:justificationMode="inter_word"/>
 
 </RelativeLayout>
