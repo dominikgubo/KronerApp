@@ -8,9 +8,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:358876490906:android:87a11d639ab00ac6220323",
+        "mobilesdk_app_id": "1:358876490906:android:76e2952d7f0431f1220323",
         "android_client_info": {
-          "package_name": "com.example.kronerapp"
+          "package_name": "com.qw.kronerapp"
         }
       },
       "oauth_client": [

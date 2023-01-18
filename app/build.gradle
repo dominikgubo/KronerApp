@@ -3,12 +3,10 @@ plugins {
     id 'kotlin-android'
     id 'com.google.gms.google-services'
 
-    // Add the Crashlytics Gradle plugin
-    id 'com.google.firebase.crashlytics'
 }
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
     buildToolsVersion "30.0.3"
 
 
@@ -17,11 +15,11 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.example.kronerapp"
-        minSdkVersion 21
-        targetSdkVersion 30
-        versionCode 1
-        versionName "1.0"
+        applicationId "com.qw.kronerapp"
+        minSdkVersion 23
+        targetSdkVersion 31
+        versionCode 5
+        versionName "1.04"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -30,7 +28,7 @@ android {
         release {
             shrinkResources true
             minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            //proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
     compileOptions {
@@ -72,6 +70,6 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:30.5.0')
     // Add the dependencies for the Crashlytics and Analytics libraries
     // When using the BoM, you don't specify versions in Firebase library dependencies
-    implementation 'com.google.firebase:firebase-crashlytics-ktx'
-    implementation 'com.google.firebase:firebase-analytics-ktx'
+    //implementation 'com.google.firebase:firebase-crashlytics-ktx'
+    //implementation 'com.google.firebase:firebase-analytics-ktx'
 }
