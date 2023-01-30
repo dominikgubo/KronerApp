@@ -4,6 +4,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.View
 import com.qw.kronerapp.classes.EmojiGifs
@@ -71,13 +72,9 @@ class neverHaveIEverActivity : AppCompatActivity() {
                     // This method is called once with the initial value and again
                     // whenever data at this location is updated.
                     val value = dataSnapshot.getValue().toString()
-                    //Log.d("FB", "Value is: $value")
-                    questionList.add(index, value)
-                    if(i==149){
-                        binding.questionLabel.text = questionList[randomIndex].toString()
-                        binding.questionNumberLabel.text = counter.toString()+"/"+(questionList.size).toString()
-                        questionList.remove(questionList[randomIndex])
-                    }
+                    Log.d("FB", "Value is: $value, a index je $index")
+                    questionList.add(value)
+
                 }
 
                 override fun onCancelled(error: DatabaseError) {
@@ -86,201 +83,216 @@ class neverHaveIEverActivity : AppCompatActivity() {
                 }
             })
 
-
         }
-
-        if (checkboxStudentValue=="true"){
-            modeCounter++
-            for(i in 0..49){
-                var qselector = "q$index2"
-                var myRefStudent = database.getReference().child("StudentQuestions").child(qselector)
-                index2++
-                myRefStudent.addValueEventListener(object : ValueEventListener {
-                    override fun onDataChange(dataSnapshot: DataSnapshot) {
-                        // This method is called once with the initial value and again
-                        // whenever data at this location is updated.
-                        val value = dataSnapshot.getValue().toString()
-                        //Log.d("FBI", "Value is: $value")
-                        questionList.add(value)
-                        binding.questionLabel.text = questionList[randomIndex].toString()
-                        binding.questionNumberLabel.text = counter.toString()+"/"+(questionList.size).toString()
-                    }
-                    override fun onCancelled(error: DatabaseError) {
-                        // Failed to read value
-                        //Log.w("FB F", "Failed to read value.", error.toException())
-                    }
-                })
+        Handler().postDelayed({
+            if (checkboxStudentValue=="true" || checkboxDriverValue=="true" || checkboxAdultValue=="true" ){
+                if(index==152){
+                    binding.questionLabel.text = questionList[randomIndex].toString()
+                    binding.questionNumberLabel.text = counter.toString()+"/"+(questionList.size).toString()
+                    questionList.remove(questionList[randomIndex])
+                }
+            } else if(index==152){
+                binding.questionLabel.text = questionList[randomIndex].toString()
+                binding.questionNumberLabel.text = counter.toString()+"/150"
+                questionList.remove(questionList[randomIndex])
             }
-        }
 
-        if (checkboxDriverValue=="true"){
-            modeCounter++
-            for(i in 0..49){
-                var qselector = "q$index3"
-                var myRefDriver = database.getReference().child("DriverQuestions").child(qselector)
-                index3++
-                myRefDriver.addValueEventListener(object : ValueEventListener {
-                    override fun onDataChange(dataSnapshot: DataSnapshot) {
-                        // This method is called once with the initial value and again
-                        // whenever data at this location is updated.
-                        val valueDriver = dataSnapshot.getValue().toString()
-                        //Log.d("FBQ", "Value is: $valueDriver")
-                        questionList.add(valueDriver)
-                        binding.questionLabel.text = questionList[randomIndex].toString()
-                        binding.questionNumberLabel.text = counter.toString()+"/"+(questionList.size).toString()
+             if (checkboxStudentValue=="true"){
+      modeCounter++
+      for(i in 0..49){
+          var qselector = "q$index2"
+          var myRefStudent = database.getReference().child("StudentQuestions").child(qselector)
+          index2++
+          myRefStudent.addValueEventListener(object : ValueEventListener {
+              override fun onDataChange(dataSnapshot: DataSnapshot) {
+                  // This method is called once with the initial value and again
+                  // whenever data at this location is updated.
+                  val value = dataSnapshot.getValue().toString()
+                  //Log.d("FBI", "Value is: $value")
+                  questionList.add(value)
+                  binding.questionLabel.text = questionList[randomIndex].toString()
+                  binding.questionNumberLabel.text = counter.toString()+"/"+(questionList.size).toString()
+              }
+              override fun onCancelled(error: DatabaseError) {
+                  // Failed to read value
+                  //Log.w("FB F", "Failed to read value.", error.toException())
+              }
+          })
+      }
+  }
+
+  if (checkboxDriverValue=="true"){
+      modeCounter++
+      for(i in 0..49){
+          var qselector = "q$index3"
+          var myRefDriver = database.getReference().child("DriverQuestions").child(qselector)
+          index3++
+          myRefDriver.addValueEventListener(object : ValueEventListener {
+              override fun onDataChange(dataSnapshot: DataSnapshot) {
+                  // This method is called once with the initial value and again
+                  // whenever data at this location is updated.
+                  val valueDriver = dataSnapshot.getValue().toString()
+                  //Log.d("FBQ", "Value is: $valueDriver")
+                  questionList.add(valueDriver)
+                  binding.questionLabel.text = questionList[randomIndex].toString()
+                  binding.questionNumberLabel.text = counter.toString()+"/"+(questionList.size).toString()
+              }
+              override fun onCancelled(error: DatabaseError) {
+                  // Failed to read value
+                  //Log.w("FB F", "Failed to read value.", error.toException())
+              }
+          })
+      }
+  }
+
+  if (checkboxAdultValue=="true"){
+      modeCounter++
+      for(i in 0..49){
+          var qselector = "q$index4"
+          var myRefAdult = database.getReference().child("18Questions").child(qselector)
+          index4++
+          myRefAdult.addValueEventListener(object : ValueEventListener {
+              override fun onDataChange(dataSnapshot: DataSnapshot) {
+                  // This method is called once with the initial value and again
+                  // whenever data at this location is updated.
+                  val valueAdult = dataSnapshot.getValue().toString()
+                  //Log.d("FBW", "Value is: $valueAdult")
+                  questionList.add(valueAdult)
+                  binding.questionLabel.text = questionList[randomIndex].toString()
+                  binding.questionNumberLabel.text = counter.toString()+"/"+(questionList.size).toString()
+              }
+              override fun onCancelled(error: DatabaseError) {
+                  // Failed to read value
+                  //Log.w("FB F", "Failed to read value.", error.toException())
+              }
+          })
+      }
+  }
+
+            Log.e("QWE",questionList.toString());
+            Log.e("QWE",questionList.toString());
+
+            binding.gifImageView.setOnClickListener{
+                SoundMethod.SoundPlayerNoLoop(this,R.raw.menu)
+                var sum = counter + questionList.size-1
+                counter++
+
+                if(counter==151 && modeCounter==0){
+                    binding.neverLabel.text = "Igra je gotova"
+                    binding.gifImageView.setImageResource(R.drawable.g_end)
+                    binding.questionLabel.text = "Sva pitanja su postavljena"
+                    binding.questionNumberLabel.visibility = View.INVISIBLE
+                    binding.nextQuestionButton.text = "NAZAD"
+                    var intent = Intent(this,MainActivity::class.java)
+                    binding.nextQuestionButton.setOnClickListener {
+                        startActivity(intent)
+                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                        finish()
                     }
-                    override fun onCancelled(error: DatabaseError) {
-                        // Failed to read value
-                        //Log.w("FB F", "Failed to read value.", error.toException())
+                    binding.gifImageView.setOnClickListener {
+                        startActivity(intent)
+                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                        finish()
                     }
-                })
-            }
-        }
-
-        if (checkboxAdultValue=="true"){
-            modeCounter++
-            for(i in 0..49){
-                var qselector = "q$index4"
-                var myRefAdult = database.getReference().child("18Questions").child(qselector)
-                index4++
-                myRefAdult.addValueEventListener(object : ValueEventListener {
-                    override fun onDataChange(dataSnapshot: DataSnapshot) {
-                        // This method is called once with the initial value and again
-                        // whenever data at this location is updated.
-                        val valueAdult = dataSnapshot.getValue().toString()
-                        //Log.d("FBW", "Value is: $valueAdult")
-                        questionList.add(valueAdult)
-                        binding.questionLabel.text = questionList[randomIndex].toString()
-                        binding.questionNumberLabel.text = counter.toString()+"/"+(questionList.size).toString()
+                } else if(counter==151+(modeCounter*50) && modeCounter!=0){
+                    binding.neverLabel.text = "Igra je gotova"
+                    binding.gifImageView.setImageResource(R.drawable.g_end)
+                    binding.questionLabel.text = "Sva pitanja su postavljena"
+                    binding.questionNumberLabel.visibility = View.INVISIBLE
+                    binding.nextQuestionButton.text = "NAZAD"
+                    var intent = Intent(this,MainActivity::class.java)
+                    binding.nextQuestionButton.setOnClickListener {
+                        startActivity(intent)
+                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                        finish()
                     }
-                    override fun onCancelled(error: DatabaseError) {
-                        // Failed to read value
-                        //Log.w("FB F", "Failed to read value.", error.toException())
+                    binding.gifImageView.setOnClickListener {
+                        startActivity(intent)
+                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                        finish()
                     }
-                })
-            }
-        }
-
-        Log.e("QWE",questionList.toString());
-        Log.e("QWE",questionList.toString());
-
-        binding.gifImageView.setOnClickListener{
-            SoundMethod.SoundPlayerNoLoop(this,R.raw.menu)
-            var sum = counter + questionList.size-1
-            counter++
-
-            if(counter==151 && modeCounter==0){
-                binding.neverLabel.text = "Igra je gotova"
-                binding.gifImageView.setImageResource(R.drawable.g_end)
-                binding.questionLabel.text = "Sva pitanja su postavljena"
-                binding.questionNumberLabel.visibility = View.INVISIBLE
-                binding.nextQuestionButton.text = "NAZAD"
-                var intent = Intent(this,MainActivity::class.java)
-                binding.nextQuestionButton.setOnClickListener {
-                    startActivity(intent)
-                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-                    finish()
                 }
-                binding.gifImageView.setOnClickListener {
-                    startActivity(intent)
-                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-                    finish()
-                }
-            } else if(counter==151+(modeCounter*50) && modeCounter!=0){
-                binding.neverLabel.text = "Igra je gotova"
-                binding.gifImageView.setImageResource(R.drawable.g_end)
-                binding.questionLabel.text = "Sva pitanja su postavljena"
-                binding.questionNumberLabel.visibility = View.INVISIBLE
-                binding.nextQuestionButton.text = "NAZAD"
-                var intent = Intent(this,MainActivity::class.java)
-                binding.nextQuestionButton.setOnClickListener {
-                    startActivity(intent)
-                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-                    finish()
-                }
-                binding.gifImageView.setOnClickListener {
-                    startActivity(intent)
-                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-                    finish()
+                else{
+                    if(emojiList.emojiId.size==1){
+                        emojiList.resetEmojis()
+                    }
+                    var random = Random.nextInt(emojiList.emojiId.size-1)
+                    binding.gifImageView.setImageResource(emojiList.emojiId[random])
+                    emojiList.emojiId.removeAt(random)
+                    //Log.e("Var", "Velicina: "+questionList.size)
+                    var randomQuestion = Random.nextInt(questionList.size-1)
+                    binding.questionLabel.text = questionList[randomQuestion].toString()
+
+                    //Log.e("AAAC", questionList[randomQuestion])
+                    questionList.remove(questionList[randomQuestion])
+                    //Log.e("AAA",randomQuestion.toString())
+                    //Log.e("AAA",questionList.toString())
+                    binding.questionNumberLabel.text = counter.toString()+"/"+sum.toString()
                 }
             }
-            else{
-                if(emojiList.emojiId.size==1){
-                    emojiList.resetEmojis()
-                }
-                var random = Random.nextInt(emojiList.emojiId.size-1)
-                binding.gifImageView.setImageResource(emojiList.emojiId[random])
-                emojiList.emojiId.removeAt(random)
-                //Log.e("Var", "Velicina: "+questionList.size)
-                var randomQuestion = Random.nextInt(questionList.size-1)
-                binding.questionLabel.text = questionList[randomQuestion].toString()
 
-                //Log.e("AAAC", questionList[randomQuestion])
-                questionList.remove(questionList[randomQuestion])
-                //Log.e("AAA",randomQuestion.toString())
-                //Log.e("AAA",questionList.toString())
-                binding.questionNumberLabel.text = counter.toString()+"/"+sum.toString()
+
+            binding.nextQuestionButton.setOnClickListener {
+                SoundMethod.SoundPlayerNoLoop(this,R.raw.menu)
+                var sum = counter + questionList.size-1
+                counter++
+
+                if(counter==151 && modeCounter==0){
+                    binding.neverLabel.text = "Igra je gotova"
+                    binding.gifImageView.setImageResource(R.drawable.g_end)
+                    binding.questionLabel.text = "Sva pitanja su postavljena"
+                    binding.questionNumberLabel.visibility = View.INVISIBLE
+                    binding.nextQuestionButton.text = "NAZAD"
+                    var intent = Intent(this,MainActivity::class.java)
+                    binding.nextQuestionButton.setOnClickListener {
+                        startActivity(intent)
+                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                        finish()
+                    }
+                    binding.gifImageView.setOnClickListener {
+                        startActivity(intent)
+                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                        finish()
+                    }
+                } else if(counter==151+(modeCounter*50) && modeCounter!=0){
+                    binding.neverLabel.text = "Igra je gotova"
+                    binding.gifImageView.setImageResource(R.drawable.g_end)
+                    binding.questionLabel.text = "Sva pitanja su postavljena"
+                    binding.questionNumberLabel.visibility = View.INVISIBLE
+                    binding.nextQuestionButton.text = "NAZAD"
+                    var intent = Intent(this,MainActivity::class.java)
+                    binding.nextQuestionButton.setOnClickListener {
+                        startActivity(intent)
+                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                        finish()
+                    }
+                    binding.gifImageView.setOnClickListener {
+                        startActivity(intent)
+                        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+                        finish()
+                    }
+                }  else{
+                    if(emojiList.emojiId.size==1){
+                        emojiList.resetEmojis()
+                    }
+                    var random = Random.nextInt(emojiList.emojiId.size-1)
+                    binding.gifImageView.setImageResource(emojiList.emojiId[random])
+                    emojiList.emojiId.removeAt(random)
+                    //Log.e("Var", "Velicina: "+questionList.size)
+                    var randomQuestion = Random.nextInt(questionList.size-1)
+                    binding.questionLabel.text = questionList[randomQuestion].toString()
+
+                    //Log.e("AAAC", questionList[randomQuestion])
+                    questionList.remove(questionList[randomQuestion])
+                    //Log.e("AAA",randomQuestion.toString())
+                    //Log.e("AAA",questionList.toString())
+                    binding.questionNumberLabel.text = counter.toString()+"/"+sum.toString()
+                }
             }
-        }
+        }, 1260)
 
 
-        binding.nextQuestionButton.setOnClickListener {
-            SoundMethod.SoundPlayerNoLoop(this,R.raw.menu)
-            var sum = counter + questionList.size-1
-            counter++
 
-            if(counter==151 && modeCounter==0){
-                binding.neverLabel.text = "Igra je gotova"
-                binding.gifImageView.setImageResource(R.drawable.g_end)
-                binding.questionLabel.text = "Sva pitanja su postavljena"
-                binding.questionNumberLabel.visibility = View.INVISIBLE
-                binding.nextQuestionButton.text = "NAZAD"
-                var intent = Intent(this,MainActivity::class.java)
-                binding.nextQuestionButton.setOnClickListener {
-                    startActivity(intent)
-                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-                    finish()
-                }
-                binding.gifImageView.setOnClickListener {
-                    startActivity(intent)
-                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-                    finish()
-                }
-            } else if(counter==151+(modeCounter*50) && modeCounter!=0){
-                binding.neverLabel.text = "Igra je gotova"
-                binding.gifImageView.setImageResource(R.drawable.g_end)
-                binding.questionLabel.text = "Sva pitanja su postavljena"
-                binding.questionNumberLabel.visibility = View.INVISIBLE
-                binding.nextQuestionButton.text = "NAZAD"
-                var intent = Intent(this,MainActivity::class.java)
-                binding.nextQuestionButton.setOnClickListener {
-                    startActivity(intent)
-                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-                    finish()
-                }
-                binding.gifImageView.setOnClickListener {
-                    startActivity(intent)
-                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-                    finish()
-                }
-            }  else{
-                if(emojiList.emojiId.size==1){
-                    emojiList.resetEmojis()
-                }
-                var random = Random.nextInt(emojiList.emojiId.size-1)
-                binding.gifImageView.setImageResource(emojiList.emojiId[random])
-                emojiList.emojiId.removeAt(random)
-                //Log.e("Var", "Velicina: "+questionList.size)
-                var randomQuestion = Random.nextInt(questionList.size-1)
-                binding.questionLabel.text = questionList[randomQuestion].toString()
-
-                //Log.e("AAAC", questionList[randomQuestion])
-                questionList.remove(questionList[randomQuestion])
-                //Log.e("AAA",randomQuestion.toString())
-                //Log.e("AAA",questionList.toString())
-                binding.questionNumberLabel.text = counter.toString()+"/"+sum.toString()
-            }
-        }
     }
 
 

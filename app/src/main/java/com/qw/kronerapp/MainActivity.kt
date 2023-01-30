@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         registerActivityLifecycleCallbacks(AppLifeCycleHelper())
-        Firebase.database.setPersistenceEnabled(true)
+        //Firebase.database.setPersistenceEnabled(true)
 
         val randomText = arrayOf("To a", "Disi lega", "After u Patici", "Love and Drinking that's what I'm thinking", "Fun and interactive", "kroner kroner kroner", "Korpak vara",
                 "Idemo na jedno pivo", "Burek u El Panu", "Dupli pelin, pepeljara i šifra od wifija", "Mother of Dragons < Zmajka \uD83D\uDC09", "www.dominikgubo.com", "Vježbaj pi*ka ti materina",

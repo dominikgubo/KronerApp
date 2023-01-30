@@ -41,12 +41,12 @@ class ModeActivity : AppCompatActivity() {
 
         binding.neverStart.setOnClickListener {
             SoundMethod.SoundPlayerNoLoop(this, R.raw.menu)
-            /*var intent = Intent(this, NeverHaveIEverSelectActivity::class.java)
+            var intent = Intent(this, NeverHaveIEverSelectActivity::class.java)
             startActivity(intent)
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-            finish()*/
-            val toast = Toast.makeText(applicationContext, "[NEVER HAVE I EVER] Trenutno isključen zbog bugova.", Toast.LENGTH_SHORT)
-            toast.show()
+            finish()
+           /* val toast = Toast.makeText(applicationContext, "[NEVER HAVE I EVER] Trenutno isključen zbog bugova.", Toast.LENGTH_SHORT)
+            toast.show() */
         }
 
         binding.kingStart.setOnClickListener {
