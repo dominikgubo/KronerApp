@@ -46,9 +46,9 @@ class MainActivity : AppCompatActivity() {
                 "Idi, idi nesanice", "Fenomenomenalno osjećam se", "Tek je 12 sati", "Tekla je rakija cijele noći venama", "Sve poštivam, svoje uživam", "Bolje biti Kroner™ nego star",
                 "Prokleta je Amerika i zlato što sja", "Bombe devedesetih", "Bobo smrade", "Bacam ruže", "Ne može", "Ala nam je dobro", "May the force be with you", "Vescere bracis meis",
                 "Demum, veniunt porci", "prodByLone music", "https://spoti.fi/3RMlf6g", "O Bella Ciao", "Kalashnikov, kalashnikov, kalashnikov",
-                "Da smo živi, zdravi još godina sto", "365 je prošlo dana", "Trezan a za sebe ne znam", "\uD83D\uDCAA Imaš mišiće da otvoriš vrata", "Ja sam genije čudo prirode", "A ono..."
+                "Da smo živi, zdravi još godina sto", "365 je prošlo dana", "Trezan a za sebe ne znam", "\uD83D\uDCAA Imaš mišiće da otvoriš vrata", "Ja sam genije čudo prirode", "I'll be back \uD83E\uDD16",
+                "Houston, we have a problem.", "In vino veritas"
         )
-
         val randIndex = (0..randomText.size-1).random()
         binding.welcome.text=randomText[randIndex]
         YoYo.with(Techniques.Bounce).duration(1500).repeat(Animation.INFINITE).playOn(binding.welcome)

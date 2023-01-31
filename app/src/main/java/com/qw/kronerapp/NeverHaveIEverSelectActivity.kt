@@ -3,6 +3,7 @@ package com.qw.kronerapp
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.qw.kronerapp.classes.MusicMethod
 import com.qw.kronerapp.classes.SoundMethod
 import com.qw.kronerapp.databinding.ActivityNeverHaveIEverSelectBinding
 import com.qw.kronerapp.loading.NeverLoadingActivity
@@ -101,12 +102,12 @@ class NeverHaveIEverSelectActivity : AppCompatActivity() {
         if (MusicMethod.player != null) {
             MusicMethod.player.pause()
         }
-    }
+    } */
 
     override fun onResume() {
         super.onResume()
         if (MusicMethod.player != null) {
             MusicMethod.player.start()
         }
-    }*/
+    }
 }

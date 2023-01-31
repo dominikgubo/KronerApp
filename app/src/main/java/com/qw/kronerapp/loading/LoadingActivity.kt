@@ -9,7 +9,6 @@ import android.os.Looper
 import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
 import com.qw.kronerapp.MainActivity
-import com.qw.kronerapp.classes.Music
 import com.qw.kronerapp.classes.MusicMethod
 import com.qw.kronerapp.databinding.ActivityLoadingBinding
 
@@ -21,8 +20,7 @@ class LoadingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoadingBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        var SongList = Music()
-        MusicMethod.SoundPlayer(this,SongList.getRandomSong())
+        MusicMethod.SoundPlayer(this)
         YoYo.with(Techniques.FadeIn).duration(2500).repeat(0).playOn(binding.logo)
         Handler(Looper.myLooper()!!).postDelayed({
             val intent = Intent(this@LoadingActivity, MainActivity::class.java)

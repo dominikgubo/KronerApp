@@ -19,17 +19,10 @@ class OptionsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityOptionsBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        var flag = true
         YoYo.with(Techniques.Shake).duration(2500).repeat(Animation.INFINITE).playOn(binding.optionTitle)
+        binding.musicChange.text="Toggle Music"
         binding.musicChange.setOnClickListener {
             MusicMethod.toggleMusic(this)
-            if(flag){
-                binding.musicChange.text="Uključi glazbu"
-                flag=!flag
-            } else{
-                binding.musicChange.text="Isključi glazbu"
-                flag=!flag
-            }
         }
     }
 
