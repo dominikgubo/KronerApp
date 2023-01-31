@@ -60,7 +60,7 @@
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="30dp"
 
         android:text="Pravila"
         android:background="@drawable/custom_button"
@@ -72,9 +72,19 @@
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="30dp"
         android:background="@drawable/custom_button"
         android:textColor="@color/white"
         android:text="Globalna statistika" />
+
+    <Button
+        android:id="@+id/to_opcije"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/custom_button5"
+        android:textColor="@color/white"
+        android:text="Opcije ⚙" />
 
 </LinearLayout>

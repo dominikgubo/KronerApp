@@ -17,8 +17,8 @@ android {
     defaultConfig {
         applicationId "com.qw.kronerapp"
         targetSdkVersion 31
-        versionCode 10
-        versionName "1.09"
+        versionCode 11
+        versionName "1.10"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         minSdkVersion 29
@@ -66,6 +66,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation 'com.daimajia.easing:library:2.0@aar'
     implementation 'com.daimajia.androidanimations:library:2.3@aar'
+    implementation 'com.daimajia.easing:library:2.4@aar'
     // Import the BoM for the Firebase platform
     implementation platform('com.google.firebase:firebase-bom:30.5.0')
     // Add the dependencies for the Crashlytics and Analytics libraries

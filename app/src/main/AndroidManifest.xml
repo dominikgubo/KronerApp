@@ -3,7 +3,7 @@
     package="com.qw.kronerapp">
 
     <application
-        android:name="com.qw.kronerapp.FirebaseOffline"
+        android:name=".FirebaseOffline"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/Kroner"
@@ -11,15 +11,24 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.KronerApp">
-        <activity android:name="com.qw.kronerapp.loading.LoadingAutobusActivity" android:screenOrientation="portrait" />
-        <activity android:name="com.qw.kronerapp.loading.NeverLoadingActivity" android:screenOrientation="portrait" />
-        <activity android:name="com.qw.kronerapp.loading.LoadingKingActivity" android:screenOrientation="portrait" />
+        <activity android:name=".OptionsActivity"
+            android:screenOrientation="portrait"/>
         <activity
-            android:name="com.qw.kronerapp.KingsCupActivity"
+            android:name=".loading.LoadingAutobusActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.qw.kronerapp.loading.LoadingActivity"
-            android:screenOrientation="portrait"  android:exported="false">
+            android:name=".loading.NeverLoadingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".loading.LoadingKingActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".KingsCupActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".loading.LoadingActivity"
+            android:exported="false"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,23 +36,23 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.qw.kronerapp.NeverHaveIEverSelectActivity"
+            android:name=".NeverHaveIEverSelectActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.qw.kronerapp.neverHaveIEverActivity"
+            android:name=".neverHaveIEverActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.qw.kronerapp.RulesActivity"
+            android:name=".RulesActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.qw.kronerapp.GameActivity"
+            android:name=".GameActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.qw.kronerapp.ModeActivity"
+            android:name=".ModeActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name="com.qw.kronerapp.MainActivity"
+            android:name=".MainActivity"
             android:screenOrientation="portrait" />
     </application>
 

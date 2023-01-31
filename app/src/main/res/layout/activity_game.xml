@@ -232,18 +232,19 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
+
     <Button
         android:id="@+id/surrenderButton"
+        android:textColor="@color/white"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginBottom="25dp"
-
+        android:layout_height="50dp"
         android:src="@drawable/flag_surrender"
-        android:text="🏳️"
-        android:textSize="30dp"
+        android:text="PREDAJ 🏳️"
+        android:textSize="10dp"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

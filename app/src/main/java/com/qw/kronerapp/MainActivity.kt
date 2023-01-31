@@ -71,6 +71,13 @@ class MainActivity : AppCompatActivity() {
             var intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://tranquil-cuchufli-dae6fb.netlify.app/dist/"))
             startActivity(intent)
         }
+        binding.toOpcije.setOnClickListener{
+            SoundMethod.SoundPlayerNoLoop(this, R.raw.menu)
+            var intent = Intent(this, OptionsActivity::class.java)
+            startActivity(intent)
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+            finish()
+        }
     }
    /* override fun onPause() {
         super.onPause()
